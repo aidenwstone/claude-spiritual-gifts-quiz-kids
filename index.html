@@ -25,6 +25,10 @@ h1{font-size:30px;line-height:1.15;margin:8px 0 6px}
 .opt.sel{border-color:var(--accent);background:var(--soft)}
 .opt.sel b{background:var(--accent);color:var(--accent-t)}
 .nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.qnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.qnav .btn{width:100%;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.qnav .btn:active:not(:disabled){transform:translateY(2px);box-shadow:none}
+.qnav .go{grid-column:1/-1;background:var(--sun);border-color:var(--sun);color:#2a2000}
 .btn{font-family:inherit;font-weight:700;font-size:20px;padding:14px 20px;border-radius:16px;border:2px solid var(--line);background:transparent;color:var(--text);cursor:pointer}
 .btn.p{background:var(--accent);color:var(--accent-t);border-color:var(--accent)}
 .btn:disabled{opacity:.4;cursor:default}
@@ -63,9 +67,10 @@ h1{font-size:30px;line-height:1.15;margin:8px 0 6px}
     <div class="bar"><i id="fill"></i></div>
     <div class="q" id="qtext"></div>
     <div class="opts" id="opts"></div>
-    <div class="nav">
+    <div class="qnav">
       <button class="btn" id="back">← Back</button>
       <button class="btn p" id="next">Next →</button>
+      <button class="btn go" id="toresults">Go to results</button>
     </div>
     <div class="hint" id="hint">Tap an answer to continue</div>
     <div style="text-align:center"><button class="link" id="jump">Jump to first unanswered</button></div>
@@ -183,6 +188,7 @@ function render(){
   $("next").textContent=i===54?"See results":"Next →";
   $("next").disabled=st.a[i]===null;
   $("hint").textContent=st.a[i]===null?"Tap an answer to continue":"";
+  $("jump").parentElement.classList.toggle("hidden",answered()===55);
 }
 function choose(v){
   st.a[st.i]=v;save();render();
@@ -267,6 +273,7 @@ $("start").onclick=()=>{st.started=true;save();show("quiz");render()};
 $("back").onclick=()=>{if(st.i>0){st.i--;save();render()}};
 $("next").onclick=advance;
 $("jump").onclick=()=>{const k=st.a.indexOf(null);if(k>=0){st.i=k;save();render()}};
+$("toresults").onclick=()=>{if(answered()===55){finish()}else{st.i=st.a.indexOf(null);save();render();$("hint").textContent="Answer all 55 questions to see your results."}};
 $("review").onclick=()=>{st.done=false;st.i=0;save();show("quiz");render()};
 $("reset").onclick=()=>{if(confirm("Erase all answers and start over?")){st={a:Array(55).fill(null),i:0,started:false,done:false};save();show("intro")}};
 load();
