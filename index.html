@@ -189,6 +189,7 @@ function render(){
   $("next").disabled=st.a[i]===null;
   $("hint").textContent=st.a[i]===null?"Tap an answer to continue":"";
   $("jump").parentElement.classList.toggle("hidden",answered()===55);
+  $("toresults").classList.toggle("hidden",answered()!==55);
 }
 function choose(v){
   st.a[st.i]=v;save();render();
@@ -275,7 +276,19 @@ $("next").onclick=advance;
 $("jump").onclick=()=>{const k=st.a.indexOf(null);if(k>=0){st.i=k;save();render()}};
 $("toresults").onclick=()=>{if(answered()===55){finish()}else{st.i=st.a.indexOf(null);save();render();$("hint").textContent="Answer all 55 questions to see your results."}};
 $("review").onclick=()=>{st.done=false;st.i=0;save();show("quiz");render()};
-$("reset").onclick=()=>{if(confirm("Erase all answers and start over?")){st={a:Array(55).fill(null),i:0,started:false,done:false};save();show("intro")}};
+let resetTimer=null;
+$("reset").onclick=()=>{
+  const b=$("reset");
+  if(!b.dataset.arm){
+    b.dataset.arm="1";b.textContent="Tap again to erase everything";
+    clearTimeout(resetTimer);
+    resetTimer=setTimeout(()=>{delete b.dataset.arm;b.textContent="Start over"},4000);
+    return;
+  }
+  clearTimeout(resetTimer);delete b.dataset.arm;b.textContent="Start over";
+  st={a:Array(55).fill(null),i:0,started:false,done:false};
+  save();$("start").textContent="Begin";show("intro");
+};
 load();
 if(st.done&&answered()===55){finish()}
 else if(st.started||answered()>0){$("start").textContent="Resume";show("quiz");render()}
