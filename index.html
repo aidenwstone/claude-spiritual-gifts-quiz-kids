@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spiritual Gifts for Kids</title>
+<style>
+:root{--bg:#eef7ff;--card:#fff;--text:#1d2540;--muted:#5b6580;--accent:#5b3fd0;--accent-t:#fff;--line:#d9e3f2;--soft:#ece8ff;--sun:#ffc83d;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141b2e;--card:#1e2740;--text:#eef2ff;--muted:#a3aed0;--accent:#a592ff;--accent-t:#13102b;--line:#34406a;--soft:#2b3560;--sun:#ffc83d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141b2e;--card:#1e2740;--text:#eef2ff;--muted:#a3aed0;--accent:#a592ff;--accent-t:#13102b;--line:#34406a;--soft:#2b3560;--sun:#ffc83d;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 ui-rounded,"Trebuchet MS","Segoe UI",system-ui,sans-serif}
+.wrap{max-width:640px;margin:0 auto;padding:20px 18px 40px}
+h1{font-size:30px;line-height:1.15;margin:8px 0 6px}
+.sub{color:var(--muted);font-size:14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px 20px;margin-top:18px}
+.bar{height:12px;background:var(--line);border-radius:12px;overflow:hidden;margin-top:14px}
+.bar>i{display:block;height:100%;background:var(--sun);width:0;transition:width .25s}
+.meta{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:8px}
+.q{font-size:22px;font-weight:700;line-height:1.35;margin:20px 0 20px;min-height:90px}
+.opts{display:grid;gap:10px}
+.opt{font-family:inherit;font-weight:700;font-size:19px;text-align:left;padding:14px 16px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--text);cursor:pointer;display:flex;gap:12px;align-items:center}
+.opt b{display:inline-flex;width:32px;height:32px;border-radius:50%;background:var(--soft);align-items:center;justify-content:center;font-size:15px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.sel b{background:var(--accent);color:var(--accent-t)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.btn{font-family:inherit;font-weight:700;font-size:20px;padding:14px 20px;border-radius:16px;border:2px solid var(--line);background:transparent;color:var(--text);cursor:pointer}
+.btn.p{background:var(--accent);color:var(--accent-t);border-color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.link:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hint{font-size:14px;color:var(--muted);margin-top:14px;text-align:center}
+.row{margin:14px 0}
+.row .top{display:flex;justify-content:space-between;font-weight:700;font-size:16px}
+.row .tr{height:12px;background:var(--line);border-radius:8px;margin-top:6px;overflow:hidden}
+.row .tr i{display:block;height:100%;background:var(--accent);border-radius:8px;opacity:.5}
+.row.top3 .tr i{opacity:1}
+.gift{background:var(--soft);border-left:6px solid var(--sun);border-radius:14px;padding:12px 14px;margin:14px 0}
+.gift h3{margin:0;font-size:20px}
+.gift p{margin:4px 0 0;font-size:15px}
+.hidden{display:none}
+.actions{flex-wrap:wrap}
+.actions .btn{flex:1 1 auto}
+@media (max-width:520px){.actions{flex-direction:column}.actions .btn{width:100%}}
+.link{background:none;border:none;color:var(--muted);font-family:inherit;font-size:16px;text-decoration:underline;cursor:pointer;padding:6px}
+.credit{font-size:12px;color:var(--muted);text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Spiritual Gifts for Kids</h1>
+  <div class="sub">55 statements. There are no wrong answers, so go with your first thought.</div>
+
+  <div id="intro" class="card">
+    <p style="margin-top:0">God has given each Christian at least one spiritual gift. This quiz helps you start finding the gifts God gave you. For each statement, choose how true it is of you:</p>
+    <p style="margin:0"><b>3</b> = Nearly always<br><b>2</b> = Most of the time<br><b>1</b> = Some of the time<br><b>0</b> = Not at all</p>
+    <p class="sub" style="margin-top:14px">Your progress saves automatically on this device, so you can close the page and pick up where you left off.</p>
+    <div class="nav" style="justify-content:flex-start"><button class="btn p" id="start">Begin</button></div>
+  </div>
+
+  <div id="quiz" class="card hidden">
+    <div class="meta"><span id="count"></span><span id="gift"></span></div>
+    <div class="bar"><i id="fill"></i></div>
+    <div class="q" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+    <div class="nav">
+      <button class="btn" id="back">← Back</button>
+      <button class="btn p" id="next">Next →</button>
+    </div>
+    <div class="hint" id="hint">Tap an answer to continue</div>
+    <div style="text-align:center"><button class="link" id="jump">Jump to first unanswered</button></div>
+  </div>
+
+  <div id="results" class="card hidden">
+    <h2 style="margin-top:0">Your results</h2>
+    <div id="top"></div>
+    <h3 style="margin-bottom:0">All scores</h3>
+    <div class="sub">Each gift has 5 statements, so the most you can score is 15.</div>
+    <div id="all"></div>
+    <div class="nav actions">
+      <button class="btn p" id="export">Export as image</button>
+      <button class="btn" id="review">Review answers</button>
+      <button class="btn" id="reset">Start over</button>
+    </div>
+  </div>
+  <div class="credit">Based on “Spiritual Gifts for Kids,” DiscipleLand, © 2007.</div>
+</div>
+
+<script>
+const GIFTS=[
+["Serving & Helping","🤝","God-given power to do tasks that support and encourage others, and to be a friend who helps people with special needs."],
+["Exercising Faith","🏔️","God-given power to trust that God can solve a problem, even when other people doubt."],
+["Applying Wisdom","🦉","God-given power to understand a situation and share God’s insight or advice."],
+["Proclaiming","📣","God-given power to share the truth of God’s Word clearly and with conviction."],
+["Evangelizing","🌍","God-given power to tell about Jesus Christ and lead people to trust Him."],
+["Teaching","📖","God-given power to explain Bible truths so Christians understand and grow in their faith."],
+["Showing Mercy","💛","God-given power to show kindness and support to people who are hurting or have problems."],
+["Leading","🧭","God-given power to understand God’s purposes and influence others to do God’s work."],
+["Managing","📋","God-given power to organize and plan, and to guide people to finish tasks well."],
+["Giving","🎁","God-given power to give generously and joyfully to the Lord, to meet the needs of the church and other people."],
+["Encouraging","🌟","God-given power to motivate people to do their best and take right action."]
+];
+const Q=[
+"I like to help people with things they cannot do by themselves.",
+"I am confident that God can do great things—even when others doubt.",
+"I enjoy thinking about problems and finding solutions that help others.",
+"When I see injustice or unfairness, I want to say something about it.",
+"I like to share with my friends what Jesus means to me.",
+"It is fun to show or explain to others how they can learn something new.",
+"I can sense when people are hurting and try to ease their pain.",
+"I enjoy taking responsibility and directing others.",
+"I like to plan ahead and to get things done.",
+"It is fun to give money to help people who need it.",
+"I enjoy pointing out the strengths and abilities of other people.",
+"I feel good about myself when I do jobs that others won’t do.",
+"I encourage others to trust God, even when things look bad.",
+"My friends view me as a person who is wise.",
+"I like to challenge other Christians to become committed to the Lord.",
+"It is easy for me to talk with people about God.",
+"I want to learn as much as I can about the Bible and being a Christian.",
+"I show sympathy toward people who are going through personal pain.",
+"I help others work together to accomplish important things.",
+"I am able to set goals and plan the best way to reach them.",
+"When I receive money, I look forward to giving some to the church.",
+"I can comfort and advise others so they feel helped and motivated.",
+"I feel good when I help out doing routine things at church.",
+"I can trust in the power of God to accomplish the impossible.",
+"I sense God’s presence when important decisions need to be made.",
+"I am persuasive and direct when I share truths from the Bible.",
+"I am comfortable telling unbelievers about my relationship with Christ.",
+"I have the ability to teach so that God’s Word comes alive to others.",
+"I would like to visit rest homes and other places where people need visitors.",
+"I can see overall needs and involve others to meet the needs.",
+"I can organize ideas, people, and tasks that lead to good results.",
+"God takes care of my needs because I give selflessly and cheerfully.",
+"I encourage and motivate other people when they are down.",
+"I enjoy working “behind the scenes” to make projects succeed.",
+"I believe God will keep His promises in spite of difficult situations.",
+"I look to the Bible for wisdom and advice when I have important decisions to make.",
+"I speak messages from God that encourage people to change.",
+"I enjoy making friends with people so I can explain the Gospel to them.",
+"I think I could teach a Bible study or lead a small group study.",
+"I feel compassion for people who suffer with difficult problems.",
+"I enjoy leading, inspiring, and motivating others to do God’s work.",
+"I enjoy organizing thoughts, ideas, and dreams into a plan of action.",
+"I give money to God’s work and feel like a partner with the ministry.",
+"I can encourage people who are “off track” to get right with God.",
+"I serve the Lord at church by moving chairs, working in the kitchen, or cleaning up.",
+"I enjoy trusting God to meet my needs and the needs of others.",
+"I help people use Bible truths to solve their problems.",
+"I feel driven to tell others what the Bible says about their situation.",
+"I like to talk with people who still don’t know Jesus as their personal Savior.",
+"I enjoy researching topics so I can tell others what I have learned.",
+"Other people open up to me and see me as caring and sensitive.",
+"In a group, others often look to me for direction.",
+"I can give others responsibilities for a task and help them accomplish it.",
+"I feel moved when I hear about the urgent needs of others.",
+"I enjoy challenging people to walk closely with the Lord."
+];
+const LABELS=["Not at all","Some of the time","Most of the time","Nearly always"];
+const KEY="spiritual-gifts-kids-v1";
+let st={a:Array(55).fill(null),i:0,started:false,done:false};
+const $=id=>document.getElementById(id);
+function load(){try{const r=localStorage.getItem(KEY);if(r){const s=JSON.parse(r);if(s&&Array.isArray(s.a)&&s.a.length===55)st=s}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+function show(v){["intro","quiz","results"].forEach(x=>$(x).classList.toggle("hidden",x!==v));window.scrollTo(0,0)}
+function answered(){return st.a.filter(x=>x!==null).length}
+function render(){
+  const i=st.i;
+  $("count").textContent="Question "+(i+1)+" of 55";
+  $("gift").textContent=answered()+" answered";
+  $("fill").style.width=(answered()/55*100)+"%";
+  $("qtext").textContent=Q[i];
+  const o=$("opts");o.innerHTML="";
+  [3,2,1,0].forEach(v=>{
+    const b=document.createElement("button");
+    b.className="opt"+(st.a[i]===v?" sel":"");
+    b.innerHTML="<b>"+v+"</b><span>"+LABELS[v]+"</span>";
+    b.onclick=()=>choose(v);
+    o.appendChild(b);
+  });
+  $("back").disabled=i===0;
+  $("next").textContent=i===54?"See results":"Next →";
+  $("next").disabled=st.a[i]===null;
+  $("hint").textContent=st.a[i]===null?"Tap an answer to continue":"";
+}
+function choose(v){
+  st.a[st.i]=v;save();render();
+  setTimeout(()=>{if(st.a[st.i]===v)advance()},220);
+}
+function advance(){
+  if(st.a[st.i]===null)return;
+  if(st.i<54){st.i++;save();render()}
+  else if(answered()===55){finish()}
+  else{st.i=st.a.indexOf(null);save();render()}
+}
+function scores(){const s=Array(11).fill(0);st.a.forEach((v,n)=>{s[n%11]+=v||0});return s}
+function ranked(){
+  const s=scores();
+  const order=s.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]||a[1]-b[1]);
+  const cut=order[2][0];
+  const top=order.filter(x=>x[0]>=cut&&x[0]>0);
+  return{order,top,ids:new Set(top.map(x=>x[1]))};
+}
+function finish(){
+  st.done=true;save();
+  const{order,top,ids}=ranked();
+  $("top").innerHTML=top.map(([v,i])=>
+    "<div class='gift'><h3>"+GIFTS[i][1]+" "+GIFTS[i][0]+" · "+v+"/15</h3><p>"+GIFTS[i][2]+"</p></div>").join("")
+    +(top.length>3?"<div class='sub'>Showing more than three because of ties.</div>":"");
+  $("all").innerHTML=order.map(([v,i])=>
+    "<div class='row"+(ids.has(i)?" top3":"")+"'><div class='top'><span>"+GIFTS[i][1]+" "+GIFTS[i][0]+"</span><span>"+v+"</span></div><div class='tr'><i style='width:"+(v/15*100)+"%'></i></div></div>").join("");
+  show("results");
+}
+function wrapText(c,t,maxW){const w=t.split(" ");const lines=[];let l="";w.forEach(x=>{const n=l?l+" "+x:x;if(c.measureText(n).width>maxW&&l){lines.push(l);l=x}else l=n});if(l)lines.push(l);return lines}
+const FF="ui-rounded,'Trebuchet MS','Segoe UI',system-ui,sans-serif";
+function paint(c,W,H,go){
+  const P=40,iw=W-2*P;let y=P;
+  const{order,top,ids}=ranked();
+  if(go){c.fillStyle="#eef7ff";c.fillRect(0,0,W,H)}
+  const T=(t,x,yy,f,col,al)=>{if(!go)return;c.font=f;c.fillStyle=col;c.textAlign=al||"left";c.fillText(t,x,yy)};
+  y+=28;T("Spiritual Gifts for Kids",P,y,"700 30px "+FF,"#1d2540");
+  y+=26;T("My results",P,y,"16px "+FF,"#5b6580");
+  y+=22;
+  top.forEach(([v,i])=>{
+    c.font="16px "+FF;
+    const lines=wrapText(c,GIFTS[i][2],iw-36);
+    const h=14+24+8+lines.length*22+10;
+    if(go){c.fillStyle="#ece8ff";c.fillRect(P,y,iw,h);c.fillStyle="#ffc83d";c.fillRect(P,y,6,h)}
+    T(GIFTS[i][1]+" "+GIFTS[i][0]+" · "+v+"/15",P+20,y+14+22,"700 21px "+FF,"#1d2540");
+    lines.forEach((ln,k)=>T(ln,P+20,y+14+24+8+(k+1)*22-4,"16px "+FF,"#1d2540"));
+    y+=h+14;
+  });
+  y+=10;T("All scores",P,y+20,"700 21px "+FF,"#1d2540");
+  y+=20+22;T("Each gift has 5 statements, so the most you can score is 15.",P,y,"13px "+FF,"#5b6580");
+  y+=16;
+  order.forEach(([v,i])=>{
+    T(GIFTS[i][1]+" "+GIFTS[i][0],P,y+18,"700 16px "+FF,"#1d2540");
+    T(String(v),P+iw,y+18,"700 16px "+FF,"#1d2540","right");
+    if(go){c.fillStyle="#d9e3f2";c.fillRect(P,y+26,iw,12);c.fillStyle=ids.has(i)?"#5b3fd0":"#b7a9ee";c.fillRect(P,y+26,iw*v/15,12)}
+    y+=48;
+  });
+  return y+P-16;
+}
+function showImg(u){
+  const o=document.createElement("div");
+  o.style.cssText="position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.75);overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 16px 24px;text-align:center;font:15px system-ui,sans-serif;color:#fff";
+  const p=document.createElement("p");p.textContent="Press and hold the image to save it (or right-click on a computer).";
+  const im=document.createElement("img");im.src=u;im.alt="My spiritual gifts results";im.style.cssText="max-width:100%;border-radius:12px;background:#eef7ff";
+  const b=document.createElement("button");b.className="btn p";b.textContent="Close";b.style.marginTop="14px";b.onclick=()=>o.remove();
+  o.append(p,im,document.createElement("br"),b);document.body.appendChild(o);
+}
+async function exportImage(){
+  let dl=null;
+  try{dl=window.claude?await window.claude.use("downloads"):null}catch(e){}
+  const W=800,k=2;
+  const cv=document.createElement("canvas");const c=cv.getContext("2d");
+  const H=paint(c,W,0,false);
+  cv.width=W*k;cv.height=H*k;c.scale(k,k);
+  paint(c,W,H,true);
+  if(!dl){showImg(cv.toDataURL("image/png"));return}
+  const blob=await new Promise(r=>cv.toBlob(r,"image/png"));
+  try{await dl.save({filename:"spiritual-gifts-kids-results.png",data:blob})}catch(e){if(!e||e.code!=="declined")alert("Couldn’t save the image.")}
+}
+$("export").onclick=exportImage;
+$("start").onclick=()=>{st.started=true;save();show("quiz");render()};
+$("back").onclick=()=>{if(st.i>0){st.i--;save();render()}};
+$("next").onclick=advance;
+$("jump").onclick=()=>{const k=st.a.indexOf(null);if(k>=0){st.i=k;save();render()}};
+$("review").onclick=()=>{st.done=false;st.i=0;save();show("quiz");render()};
+$("reset").onclick=()=>{if(confirm("Erase all answers and start over?")){st={a:Array(55).fill(null),i:0,started:false,done:false};save();show("intro")}};
+load();
+if(st.done&&answered()===55){finish()}
+else if(st.started||answered()>0){$("start").textContent="Resume";show("quiz");render()}
+else show("intro");
+</script>
+</body>
+</html>
